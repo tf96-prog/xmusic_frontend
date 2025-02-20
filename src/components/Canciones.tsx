@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactPlayer from 'react-player'
 import { Button } from '@mantine/core';
+import { Table } from '@mantine/core';
 
 type Cancion = {
     id: number;
@@ -23,26 +24,27 @@ function Canciones(){
     if(cancionSeleccionada!=null){
         urlCancion=cancionSeleccionada.url;
     }
-    
+
+    const elementosCanciones = cancionAsignada.map(cancion=> 
+        <Table.Tr key={cancion.id}>
+            <Table.Th>{cancion.id}</Table.Th>
+            <Table.Td>{cancion.nombre}</Table.Td>
+            <Table.Td><Button variant="outline" color="lime" onClick={()=>setCancionSeleccionada(cancion)}>Reproducir</Button></Table.Td>
+        </Table.Tr>);
     return (
         <>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Reproduccion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {cancionAsignada.map(cancion=> 
-                    <tr key={cancion.id}>
-                        <th scope="row">{cancion.id}</th>
-                        <td>{cancion.nombre}</td>
-                        <td><Button variant="outline" color="lime" onClick={()=>setCancionSeleccionada(cancion)}>Reproducir</Button></td>
-                    </tr>)}
-                </tbody>
-            </table>
+            <Table>
+                <Table.Thead>
+                    <Table.Tr>
+                        <Table.Th>ID</Table.Th>
+                        <Table.Th>Nombre</Table.Th>
+                        <Table.Th>Reproduccion</Table.Th>
+                    </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>
+                    {elementosCanciones}
+                </Table.Tbody>
+            </Table>
             <ReactPlayer url={urlCancion} />
         </>
     )
