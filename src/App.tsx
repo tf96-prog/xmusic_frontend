@@ -1,4 +1,4 @@
-import Canciones from "./components/Canciones";
+import Listado from "./components/Listado";
 import '@mantine/core/styles.css';
 import { AppShell, Burger, Group, Skeleton, MantineProvider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -31,7 +31,7 @@ function App() {
           ))}
       </AppShell.Navbar>
       <AppShell.Main>
-        <Canciones/>
+        <Listado/>
       </AppShell.Main>
       <AppShell.Aside p="md">Aside</AppShell.Aside>
       <AppShell.Footer p="md">Footer</AppShell.Footer>
