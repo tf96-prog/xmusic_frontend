@@ -20,7 +20,7 @@ type Album = {
     anio: number;
 }
 
-function Listado(){
+function Canciones(){
     const [canciones, setCancion]=useState<Cancion[]>([]);
     const [cancionSeleccionada, setCancionSeleccionada] = useState<Cancion | null>(null);
     const [albumes, setAlbum]=useState<Album[]>([]);
@@ -69,4 +69,4 @@ function Listado(){
         </>
     )
 }
-export default Listado
+export default Canciones
