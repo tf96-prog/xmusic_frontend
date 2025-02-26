@@ -29,7 +29,11 @@ function Login(){
         fetch("http://localhost:8000/login/",{method:"POST",body:json, headers: {'Content-Type': 'application/json'}})
         .then(res => res.json())
         .then(data => {
-                fetch('http://localhost:8000/usuarios/yo/',{headers: {'Authorization':'Token ' + data.token}})
+            fetch('http://localhost:8000/usuarios/yo/',{headers: {'Authorization':'Token ' + data.token}})
+            .then(res=>res.json())
+            .then(usuario=>{
+                user.setUsuario(usuario)
+            })
                 
                 console.log(data)
             });
