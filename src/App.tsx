@@ -5,14 +5,40 @@ import { useDisclosure } from '@mantine/hooks';
 import Albumes from "./components/Albumes";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router";
 import Login from "./components/Login";
+import React, { useState } from "react";
+
+type Usuario={
+    id: number
+    username: string
+    email: string
+}
+
+type ContextoUsuarioType = {
+  usuario: Usuario | null,
+  setUsuario: (_usuario:Usuario | null) => void
+}
+
+export const cont=React.createContext<ContextoUsuarioType>({
+  usuario: null,
+  setUsuario: (_usuario:Usuario | null) => {}
+});
+
+  
+export let user1: Usuario={'id':0,'username': '', 'email': ''};
 
 function App() {
 
   const [opened, { toggle }] = useDisclosure();
+  const [usuario, setUsuario]=useState<Usuario | null>(null);
+  const setUsuarioContext = (usuario: Usuario | null) => {
+    setUsuario(usuario)
+  }
+
+  let userContext1: ContextoUsuarioType={'usuario': null, 'setUsuario': setUsuarioContext};
   
   return (
-    
-    <BrowserRouter>
+    <cont.Provider value={userContext1}>
+      <BrowserRouter>
       <MantineProvider>
           <AppShell
         header={{ height: 60 }}
@@ -46,17 +72,15 @@ function App() {
           </Routes>
         </AppShell.Main>
         <AppShell.Aside p="md">Aside</AppShell.Aside>
-          <AppShell.Footer p="md">Footer</AppShell.Footer>
+          <AppShell.Footer p="md">{usuario?.username}</AppShell.Footer>
         </AppShell>
       </MantineProvider>
     </BrowserRouter>
+
+    </cont.Provider>
+    
     
   )
 }
 
-export default App
-
-
-
-
-
+export default App;
