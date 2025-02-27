@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import ReactPlayer from 'react-player'
+import { useContext, useEffect, useState } from "react";
 import { Button } from '@mantine/core';
 import { Table } from '@mantine/core';
+import { contCancion } from "../App";
 
 type Cancion = {
     id: number;
@@ -20,9 +20,11 @@ type Album = {
     anio: number;
 }
 
+
+
 function Canciones(){
+    const can=useContext(contCancion);
     const [canciones, setCancion]=useState<Cancion[]>([]);
-    const [cancionSeleccionada, setCancionSeleccionada] = useState<Cancion | null>(null);
     const [albumes, setAlbum]=useState<Album[]>([]);
     useEffect(()=>{
         fetch("http://localhost:8000/canciones/").then(response=>response.json()).then(data=>{
@@ -42,7 +44,6 @@ function Canciones(){
 
         return null;
     }
-
     
     return (
         <>
@@ -61,12 +62,15 @@ function Canciones(){
                         <Table.Th>{cancion.id}</Table.Th>
                         <Table.Td>{cancion.nombre}</Table.Td>
                         <Table.Td>{obtenerAlbum(cancion)?.nombre}</Table.Td>
-                        <Table.Td><Button variant="outline" color="lime" onClick={()=>setCancionSeleccionada(cancion)}>Reproducir</Button></Table.Td>
+                        <Table.Td><Button variant="outline" color="lime" onClick={()=>can.setCancion(cancion)}>Reproducir</Button></Table.Td>
                     </Table.Tr>)}
                 </Table.Tbody>
             </Table>
-            {cancionSeleccionada && <ReactPlayer url={cancionSeleccionada.url} />}
         </>
     )
 }
+
+
+
+
 export default Canciones

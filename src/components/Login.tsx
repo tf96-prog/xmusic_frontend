@@ -2,7 +2,7 @@ import { Button,Modal,TextInput,PasswordInput,Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { useContext } from "react";
-import { cont } from "../App";
+import { contUsuario } from "../App";
 
 type FormValues = {
     usuario: string;
@@ -13,7 +13,7 @@ type FormValues = {
 
 function Login(){
 
-    const user=useContext(cont);
+    const user=useContext(contUsuario);
 
     const form = useForm({
         mode: 'uncontrolled',
@@ -33,6 +33,7 @@ function Login(){
             .then(res=>res.json())
             .then(usuario=>{
                 user.setUsuario(usuario)
+                user.setToken(data.token)
             })
                 
                 console.log(data)
@@ -46,7 +47,7 @@ function Login(){
     <>
         <Modal opened={opened} onClose={close} title="Login">
         <form onSubmit={form.onSubmit(enviarInformacion)}>
-            <TextInput label="Usuario" withAsterisk description="nombre del ususario que se registrara" placeholder="Nombre de usuario" key={form.key('usuario')}{...form.getInputProps('usuario')}/>
+            <TextInput label="Usuario" withAsterisk description="nombre del usuario que se registrara" placeholder="Nombre de usuario" key={form.key('usuario')}{...form.getInputProps('usuario')}/>
             <PasswordInput label="Contrasenia" withAsterisk description="Contrasenia del usuario que se registrara" placeholder="Contrasenia del usuario" key={form.key('contrasenia')}{...form.getInputProps('contrasenia')}/>
             <Group justify="flex-end" mt="md">
                 <Button type="submit">Registarse</Button>
