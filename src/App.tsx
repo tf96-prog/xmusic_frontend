@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import ListaReproducciones from "./components/ListaReproducciones";
+import { CookiesProvider } from 'react-cookie';
 
 type Usuario={
     id: number
@@ -106,58 +107,59 @@ function App() {
     'setLista': setListaContext};
 
   return (
-    <contUsuario.Provider value={userContext1}>
-      <contCancion.Provider value={cancionContext1}>
-        <contLista.Provider value={listaContext1}>
-        <BrowserRouter>
-          <MantineProvider>
-              <AppShell
-            header={{ height: 60 }}
-            footer={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-            aside={{ width: 300, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
-            padding="md"
-          >
-            <AppShell.Header>
-              <Group h="100%" px="md">
-                <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                <Login/>
-                {usuario?.username}
-                
-              </Group>
-              
-            </AppShell.Header>
-            <AppShell.Navbar p="md">
-              Seleccion
-              <ul>
-                <li>
-                  <NavLink to="/">Canciones</NavLink>
-                </li>
-                <li>
-                  <NavLink to="albumes">Albumes</NavLink>
-                </li>
-                <li>
-                  <NavLink to="listas">Listas</NavLink>
-                </li>
-              </ul>
-            </AppShell.Navbar>
-            <AppShell.Main>
-              <Routes>
-                <Route index element={<Canciones />} />
-                <Route path="albumes" element={<Albumes />} />
-                <Route path="listas" element={<ListaReproducciones />} />
-              </Routes>
-            </AppShell.Main>
-              <AppShell.Footer p="md">{cancionSelect && <ReactPlayer url={cancionSelect.url} />}</AppShell.Footer>
-            </AppShell>
-          </MantineProvider>
-        </BrowserRouter>
-        </contLista.Provider>
+    <CookiesProvider defaultSetOptions={{ path: '/' }}>
+      <contUsuario.Provider value={userContext1}>
+        <contCancion.Provider value={cancionContext1}>
+          <contLista.Provider value={listaContext1}>
+            <BrowserRouter>
+                <MantineProvider>
+                  <AppShell
+                header={{ height: 60 }}
+                footer={{ height: 60 }}
+                navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+                aside={{ width: 300, breakpoint: 'md', collapsed: { desktop: false, mobile: true } }}
+                padding="md"
+              >
+                <AppShell.Header>
+                  <Group h="100%" px="md">
+                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    <Login/>
+                    {usuario?.username}
+                    
+                  </Group>
+                  
+                </AppShell.Header>
+                <AppShell.Navbar p="md">
+                  Seleccion
+                  <ul>
+                    <li>
+                      <NavLink to="/">Canciones</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="albumes">Albumes</NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="listas">Listas</NavLink>
+                    </li>
+                  </ul>
+                </AppShell.Navbar>
+                <AppShell.Main>
+                  <Routes>
+                    <Route index element={<Canciones />} />
+                    <Route path="albumes" element={<Albumes />} />
+                    <Route path="listas" element={<ListaReproducciones />} />
+                  </Routes>
+                </AppShell.Main>
+                  <AppShell.Footer p="md">{cancionSelect && <ReactPlayer url={cancionSelect.url} />}</AppShell.Footer>
+                </AppShell>
+              </MantineProvider>
+            </BrowserRouter>
+          </contLista.Provider>
       </contCancion.Provider>
           
 
-    </contUsuario.Provider>
-        
+      </contUsuario.Provider>
+    </CookiesProvider>
     
   )
 }

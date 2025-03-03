@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import { useContext } from "react";
 import { contUsuario } from "../App";
+import { useCookies } from 'react-cookie';
 
 type FormValues = {
     usuario: string;
@@ -13,6 +14,7 @@ type FormValues = {
 
 function Login(){
 
+    const [cookies, setCookie] = useCookies(['token']);
     const user=useContext(contUsuario);
 
     const form = useForm({
@@ -34,6 +36,8 @@ function Login(){
             .then(usuario=>{
                 user.setUsuario(usuario)
                 user.setToken(data.token)
+                setCookie('token',data.token)
+                close()
             })
                 
                 console.log(data)
