@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { contUsuario } from "../App";
+import { useEffect, useState } from "react";
 import { Button, Popover, Text } from "@mantine/core";
+import { useCookies } from "react-cookie";
 
 type ListaReproduccion={
 
@@ -28,17 +28,18 @@ type Cancion = {
 
 
 function ListaReproduccion(){
-    const user=useContext(contUsuario);
+    const [cookie]=useCookies(['token']);
     const [listas,setLista]=useState<ListaReproduccion[]>([]);
     useEffect(()=>{
-        if(user.token != null){
-            fetch("http://localhost:8000/listas/",{headers:{'Authorization':'Token ' + user.token}}).then(response=>response.json()).then(data=>{
+        if(cookie.token != null){
+            fetch("http://localhost:8000/listas/",{headers:{'Authorization':'Token ' + cookie.token}}).then(response=>response.json()).then(data=>{
                 setLista(data)
+                console.log(cookie)
             });
         }
     },[])
 
-    if(user.token == null){
+    if(cookie.token == null){
         return(
             <>
                 <Popover width={200} position="bottom" withArrow shadow="md">

@@ -10,8 +10,6 @@ type FormValues = {
     contrasenia: string;
 }
 
-
-
 function Login(){
 
     const [cookies, setCookie] = useCookies(['token']);
@@ -35,9 +33,9 @@ function Login(){
             .then(res=>res.json())
             .then(usuario=>{
                 user.setUsuario(usuario)
-                user.setToken(data.token)
                 setCookie('token',data.token)
                 close()
+
             })
                 
                 console.log(data)

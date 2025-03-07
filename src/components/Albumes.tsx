@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react"
+import { useContext } from "react"
+import AlbumNuevo from "./AlbumNuevo";
+import { contAlbum } from "../App";
 
-type Album = {
+export type Album = {
     id: number;
     artista: number;
     nombre: string;
     anio: number;
 }
 
+
 function Albumes(){
 
-    const [albumes,setAlbum]=useState<Album[]>([]);
-    useEffect(()=>{fetch("http://localhost:8000/albumes/").then(response=>response.json()).then(data=>{
-        setAlbum(data)
-    });},[])
+    const album=useContext(contAlbum);
     return(
         <>
             <div>
                 <h1>Albumes</h1>
-                {albumes.map(album=><li key={album.id}>{album.nombre}</li>)}
+                {album.album.map(album=><li key={album.id}>{album.nombre}</li>)}
+                <AlbumNuevo/>
             </div>
         </>
     );
