@@ -63,6 +63,7 @@ type Cancion = {
 
 type ContextoCancionType = {
   cancion: Cancion | null,
+  setCancionSolo: (cancion:Cancion)=>void,
   setCancion: (cancion:Cancion | null) => void
 }
 
@@ -79,6 +80,7 @@ export const contAlbum=React.createContext<ContextoAlbumType>({
 
 export const contCancion=React.createContext<ContextoCancionType>({
   cancion: null,
+  setCancionSolo: (cancion:Cancion) => {},
   setCancion: (_cancion:Cancion | null) => {}
 });
 
@@ -108,12 +110,26 @@ function App() {
     setAlbumes(album)
   }
 
+  const [cancion,setCanciones]=useState<Cancion[]>([]);
+  const setCancion_Context=(cancion: Cancion[]) => {
+    setCanciones(cancion)
+  }
+
   const setAlbumSoloContext=(albumSolo: Album) => {
     const newAlbumes = [
       ...album,
       albumSolo
     ]
     setAlbumes(newAlbumes)
+  }
+
+
+  const setCancionSoloContext=(cancionSolo: Cancion) => {
+    const newCanciones = [
+      ...cancion,
+      cancionSolo
+    ]
+    setCanciones(newCanciones)
   }
 
   let userContext1: ContextoUsuarioType={
@@ -123,6 +139,7 @@ function App() {
   
   let cancionContext1: ContextoCancionType={
     'cancion': null,
+    'setCancionSolo': setCancionSoloContext,
     'setCancion': setCancionContext
   };
 

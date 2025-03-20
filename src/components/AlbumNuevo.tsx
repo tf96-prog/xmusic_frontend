@@ -16,8 +16,6 @@ type Art={
     label: string;
 }
 
-
-
 function AlbumNuevo(){
 
     const form = useForm({
@@ -28,9 +26,7 @@ function AlbumNuevo(){
                 anio: 0
             }
     });
-
     
-
     const [opened, { open, close }] = useDisclosure(false);
     const [cookie]=useCookies(['token']);
     const artist=useContext(contArtista);
